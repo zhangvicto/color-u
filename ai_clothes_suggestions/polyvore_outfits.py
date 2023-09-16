@@ -24,7 +24,7 @@ def parse_iminfo(question, im2index, id2im, gt = None):
         gt: optional, the ground truth outfit set this item belongs to
     """
     questions = []
-    is_correct = np.zeros(len(question), np.bool)
+    is_correct = np.zeros(len(question), bool)
     for index, im_id in enumerate(question):
         set_id = im_id.split('_')[0]
         if gt is None:

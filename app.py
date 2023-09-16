@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, send_from_directory, request
 from flask_cors import CORS #comment this on deployment
+from 
 
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 CORS(app) #comment this on deployment
@@ -28,15 +29,7 @@ if __name__ == '__main__':
 def main(path):
     return send_from_directory(app.static_folder,'index.html')
 
-@app.route('/api/health')
-def health():
-    return '', 200
-
-@app.route('/api/ready')
-def ready():
-    return '', 200
-
-@app.route('/api/data/condition', methods=['GET'])
+@app.route('/api/image', methods=['GET'])
 def data_condition(): 
     try: 
         data = condition_data()
