@@ -1,25 +1,29 @@
-import React, { useState } from "react";
-import './tailwind.css'
+import React from 'react';
+import BodyType from './components/BodyType';
 
-function App() {
-    const [file, setFile] = useState();
-    function handleChange(e) {
-        console.log(e.target.files);
-        setFile(URL.createObjectURL(e.target.files[0]));
-    }
- 
-    return (
-        <div className="App">
-                <h1 className="text-3xl font-bold underline">Upload an image:</h1>
-            <input type="file" onChange={handleChange} />
-            <img 
-            alt="not found"
-            width={"250"}
-            src={file} />
- 
-        </div>
- 
-    );
+export default function App() {
+  return (
+    <>
+      <BodyType 
+        image={'https://source.unsplash.com/300x300'} 
+        text="ROUND (apple)"
+      />
+      <BodyType 
+        image={'https://source.unsplash.com/300x300'} 
+        text="PEAR (triangle)"
+      />
+      <BodyType 
+        image={'https://source.unsplash.com/300x300'} 
+        text="INVERTED TRIANGLE"
+      />
+      <BodyType 
+        image={'https://source.unsplash.com/300x300'} 
+        text="RECTANGULAR (athletic)"
+      />
+      <BodyType 
+        image={'https://source.unsplash.com/300x300'} 
+        text="HOURGLASS"
+      />
+    </>
+  )
 }
- 
-export default App;
