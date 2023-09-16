@@ -4,6 +4,26 @@ from flask_cors import CORS #comment this on deployment
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
 CORS(app) #comment this on deployment
 
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return "No file part"
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return "No selected file"
+
+    # You can process the uploaded file here
+    # For example, save it to a directory
+    file.save('uploads/' + file.filename)
+
+    return "File uploaded successfully"
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+"""
 @app.route("/", defaults={'path': ''})
 def main(path):
     return send_from_directory(app.static_folder,'index.html')
@@ -58,3 +78,4 @@ def upload():
         return insert_design_data(request.json['sona_id'], request.json['condition'], request.json['first_item'], request.json['second_item'], request.json['third_item'], request.json['complete_outfit'])
     elif request.json['table'] == 'monogram_table': 
         return insert_monogram_data(request.json['sona_id'], request.json['condition'], request.json['text'], request.json['location'], request.json['font'], request.json['colour'], request.json['accessory'])
+"""

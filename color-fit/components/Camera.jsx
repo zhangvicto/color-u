@@ -47,23 +47,36 @@ export default function CameraComponent() {
     setShowModal(true); // Open the modal
   };
 
-  const closeAndSendImage = () => {
-    // Perform the POST request with the captured image
-    // Replace this with your actual POST request logic
-    // Example:
-    // fetch('/your-api-endpoint', {
-    //   method: 'POST',
-    //   body: JSON.stringify({ image: capturedImage }),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // })
-    // .then(response => {
-    //   // Handle response
-    // })
-    // .catch(error => {
-    //   // Handle error
-    // });
+  const closeAndSendImage = async () => {
+    if (!capturedImage) {
+      // Handle the case where there's no captured image
+      console.log('no captured image');
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('file', capturedImage); // 'file' should match the field name expected by the Flask server
+  
+    try {
+      const response = await fetch('/upload', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Content-Type': 'application/json',
+          },
+      });
+  
+      if (response.ok) {
+        // Handle success
+        console.log('Image uploaded successfully');
+      } else {
+        // Handle error
+        console.error('Failed to upload image');
+      }
+    } catch (error) {
+      // Handle network errors
+      console.error('Network error', error);
+    }
 
     // Close the modal and reset the captured image
     setShowModal(false);
