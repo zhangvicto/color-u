@@ -3,6 +3,7 @@ import numpy as np
 from webcolors import CSS3_HEX_TO_NAMES, hex_to_rgb, rgb_to_hex
 from scipy.spatial import KDTree
 from PIL import Image
+from colour_selection import SelectRandomColour
 
 def convert_rgb_to_names(rgb_tuple):
     # a dictionary of all the hex and their respective names in css3
@@ -89,11 +90,13 @@ def vision(img):
         # tone_hex = rgb_to_hex((int(avg_tone[0]), int(avg_tone[1]), int(avg_tone[2])))
 
         match = closest_tone_match((int(extracted_tones[0]), int(extracted_tones[1]), int(extracted_tones[2])))
+
+        print(SelectRandomColour(match))
         # tone_name = convert_rgb_to_names((int(avg_tone[0]), int(avg_tone[1]), int(avg_tone[2])))
-        cv2.putText(img, "Skin Tone: {}".format(match), (x, y), 0, 0.5, (0,0,255))
+        # cv2.putText(img, "Skin Tone: {}".format(match), (x, y), 0, 0.5, (0,0,255))
 
     # Display the output
-    cv2.imshow('img', img)
+    # cv2.imshow('img', img)
 
 if __name__ == '__main__': 
     cap = cv2.VideoCapture(0)

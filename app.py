@@ -9,23 +9,7 @@ CORS(app) #comment this on deployment
 def main(path):
     return send_from_directory(app.static_folder,'index.html')
 
-@app.route('/api/image', methods=['GET'])
-def data_condition(): 
-    try: 
-        data = condition_data()
-        return data, 200
-    except: 
-        return jsonify({'error':'error'})
-
-@app.route('/api/data/click', methods=['GET'])
-def data_click(): 
-    try: 
-        data = click_data()
-        return data, 200
-    except: 
-        return jsonify({'error':'error'})
-
-@app.route('/api/data/design', methods=['GET'])
+@app.route('/api/upload_image', methods=['GET', 'POST'])
 def data_design(): 
     try: 
         data = design_data()
