@@ -1,8 +1,7 @@
 import React from 'react';
 import BodyType from '../../color-fit/components/BodyType';
-import './index.css'
 
-export default function App() {
+export default function Choice() {
   return (
     <>
       <BodyType 
