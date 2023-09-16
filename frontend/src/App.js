@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import './tailwind.css'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [file, setFile] = useState();
+    function handleChange(e) {
+        console.log(e.target.files);
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
+ 
+    return (
+        <div className="App">
+                <h1 className="text-3xl font-bold underline">Upload an image:</h1>
+            <input type="file" onChange={handleChange} />
+            <img 
+            alt="not found"
+            width={"250"}
+            src={file} />
+ 
+        </div>
+ 
+    );
 }
-
+ 
 export default App;
