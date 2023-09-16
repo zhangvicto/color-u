@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 
-<<<<<<< HEAD:frontend/src/App.js
-function App() {
-    const [file, setFile] = useState();
-    
-=======
 export default function Upload() {
   const [file, setFile] = useState();
->>>>>>> origin/isa:color-fit/pages/upload.js
     function handleChange(e) {
         if (e.target.files && e.target.files[0]) {
             const reader = new FileReader();
