@@ -1,17 +1,26 @@
 from flask import Flask, jsonify, send_from_directory, request, send_file
 from flask_cors import CORS #comment this on deployment
 from setup import vision
+from utils import data_uri_to_cv2_img
 import cv2
+import base64
 
 app = Flask(__name__, static_url_path='', static_folder='color-fit/build')
 CORS(app) #comment this on deployment
 
 @app.route("/", defaults={'path': ''})
 def main(path):
-    return "Hello"
+    return "hi"
+# send_from_directory(app.static_folder,'index.html')
+
+@app.route("/api/body_type", methods=['POST'])
+def data_body_type(): 
+    data = request.json["body_type"]
+    print(data)
+    return data, 200
 
 # Serve Static Image
-@app.route('/api/pants', methods=['GET', 'POST'])
+@app.route('/api/pants', methods=['GET'])
 def pants_images(): 
     try: 
         data = send_file('./pants.jpg')
@@ -20,7 +29,7 @@ def pants_images():
         return jsonify({'error':'error'})
 
 # Serve Static Image
-@app.route('/api/shoes', methods=['GET', 'POST'])
+@app.route('/api/shoes', methods=['GET'])
 def shoes_images(): 
     try: 
         data = send_file('./shoes.jpg')
@@ -30,11 +39,11 @@ def shoes_images():
 
 @app.route('/api/upload', methods=['POST'])
 def upload_image():
-    try:
-        if 'file' not in request.files:
-            return "No file part"
+    uri = request.json['image']
+    
+    img = data_uri_to_cv2_img(uri)
 
-    return send_file(processed_dir)
+    return vision(img), 200
 
 # @app.route('/captured', methods=['GET'])
 # def processed():

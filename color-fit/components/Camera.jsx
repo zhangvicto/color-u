@@ -2,6 +2,34 @@ import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Webcam from 'react-webcam';
 
+const dataURLtoBlob = (dataURL) => {
+  const parts = dataURL.split(',');
+  const contentType = parts[0].match(/:(.*?);/)[1];
+  const b64Data = atob(parts[1]);
+  const arrayBuffer = new ArrayBuffer(b64Data.length);
+  const view = new Uint8Array(arrayBuffer);
+
+  for (let i = 0; i < b64Data.length; i++) {
+    view[i] = b64Data.charCodeAt(i);
+  }
+
+  return new Blob([arrayBuffer], { type: contentType });
+};
+
+function uploadImage(imageURL) {
+  //const blob_data = dataURLtoBlob(imageURL)
+
+  //console.log(blob_data)
+
+  fetch('http://127.0.0.1:5000/api/upload', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json' },
+      body: JSON.stringify({image: imageURL})
+  })
+      .then(response => response.json())
+      .catch(error => console.log('error', error));
+}
+
 export default function CameraComponent() {
   const webcamRef = useRef(null); 
   const [capturedImage, setCapturedImage] = useState(null);
@@ -28,7 +56,8 @@ export default function CameraComponent() {
               </button>
               <button
                 onClick={() => {
-                  saveImageLocally(capturedImage);
+                  uploadImage(capturedImage)
+                  //saveImageLocally(capturedImage);
                   setShowModal(false);
                   setCapturedImage(null);
                   navigate();
@@ -79,22 +108,6 @@ export default function CameraComponent() {
     URL.revokeObjectURL(blobURL);
     document.body.removeChild(a);
   };
-  
-  // Function to convert a data URL to a Blob
-  const dataURLtoBlob = (dataURL) => {
-    const parts = dataURL.split(',');
-    const contentType = parts[0].match(/:(.*?);/)[1];
-    const b64Data = atob(parts[1]);
-    const arrayBuffer = new ArrayBuffer(b64Data.length);
-    const view = new Uint8Array(arrayBuffer);
-  
-    for (let i = 0; i < b64Data.length; i++) {
-      view[i] = b64Data.charCodeAt(i);
-    }
-  
-    return new Blob([arrayBuffer], { type: contentType });
-  };
-  
 
   return (
     <div className='flex flex-col items-center'>

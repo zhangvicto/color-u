@@ -112,8 +112,8 @@ def vision(img):
         print(color)
 
         top_dir = SelectRandomTop(color)
-        some = Image.open("./dataset/" + color + "/" + top_dir)
-        some.show()
+        # some = Image.open("./dataset/" + color + "/" + top_dir)
+        # some.show()
         print(top_dir)
 
         # Save images 
