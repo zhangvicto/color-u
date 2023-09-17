@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BodyType from '../components/BodyType';
 import Taskbar from './taskbar';
 
@@ -19,14 +19,37 @@ function logBodyType(bodyType) {
 }
 
 export default function Choice() {
+  const [bodyType, setBodyType] = useState('');
 
   const handlePrevious = () => {
-    window.location.href = "/cam"; // Change the URL to the correct path
+    window.location.href = "/"; // Change the URL to the correct path
   };
 
   const handleNext = () => {
-    window.location.href = "/"; // Change the URL to the correct path
+    console.log(bodyType);
+    window.location.href = "/cam"; // Change the URL to the correct path
   };
+
+  const sendData = async () => {
+    try {
+      const response = await fetch('http://your-flask-app-url/receive_data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyType),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log('Server Response:', responseData.message);
+      } else {
+        console.error('Request failed');
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  }
 
   return (
     <div>
@@ -37,26 +60,31 @@ export default function Choice() {
         <BodyType 
           image={Apple} 
           text="Apple"
+          onclick={() => setBodyType('apple')}
         /> </div>
         <div className='hover:bg-[#EAD0Ad] rounded-2xl border-[#494A43] text-[#494A43]'> 
         <BodyType 
           image={Pear} 
           text="Pear"
+          onclick={() => setBodyType('pear')}
         /> </div>
       <div className='hover:bg-[#956D44] rounded-2xl border-[#494A43] hover:text-white'> 
         <BodyType
           image={Inverted} 
           text="Inverted"
+          onclick={() => setBodyType('inverted')}
         /> </div>
       <div className='hover:bg-[#684032] rounded-2xl border-[#494A43] hover:text-white'> 
         <BodyType 
           image={Rectangular} 
           text="Rectangular"
+          onclick={() => setBodyType('rectangular')}
         /> </div>
       <div className='hover:bg-[#352B25] rounded-2xl border-[#494A43] hover:text-white'> 
         <BodyType 
           image={Hourglass}
           text="Hourglass"
+          onclick={() => setBodyType('hourglass')}
         /> </div>
       </div>
 
