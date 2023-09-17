@@ -17,9 +17,17 @@ def data_body_type():
     update_body_type(data)
     return data, 200
 
+@app.route('/api/top', methods=['GET'])
+def top_image(): 
+    try: 
+        data = send_file('./top.jpg')
+        return data, 200
+    except: 
+        return jsonify({'error':'error'})
+
 # Serve Static Image
 @app.route('/api/pants', methods=['GET'])
-def pants_images(): 
+def pants_image(): 
     try: 
         data = send_file('./pants.jpg')
         return data, 200
@@ -28,7 +36,7 @@ def pants_images():
 
 # Serve Static Image
 @app.route('/api/shoes', methods=['GET'])
-def shoes_images(): 
+def shoes_image(): 
     try: 
         data = send_file('./shoes.jpg')
         return data, 200

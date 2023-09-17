@@ -88,7 +88,7 @@ export default function Choice() {
         /> </div>
       </div>
 
-      <Taskbar onPrevious={handlePrevious} onNext={logBodyType(bodyType)} />
+      <Taskbar onPrevious={handlePrevious} onNext={() =>logBodyType(bodyType)} />
 
     </div>
   )
