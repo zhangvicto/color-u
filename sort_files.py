@@ -1,8 +1,5 @@
 import pandas as pd
-from PIL import Image
-import io
 import numpy as np
-import webcolors
 import json
 
 colors = ['black', 'blue', 'brown', 'beige', 'orange', 'yellow', 'white', 'red', 'green', 'gold', 'purple', 'charcoal', 'grey', 'khaki', 'pink']

@@ -8,3 +8,7 @@ def data_uri_to_cv2_img(uri):
 
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     return img
+
+def update_body_type(body_type): 
+    with open('local_data.txt', 'w') as f: 
+        f.write(body_type)

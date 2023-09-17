@@ -4,7 +4,6 @@ from scipy.spatial import KDTree
 from colour_selection import SelectRandomColour, SelectTopColor, SelectRandomTop
 import json
 from cohere_gen.generate import generate, prompt, store_image
-from PIL import Image
 
 def convert_rgb_to_names(rgb_tuple):
     # a dictionary of all the hex and their respective names in css3
@@ -42,10 +41,14 @@ def recommendations(path):
     f = open('./dataset/descriptions.json',)
     json_file = json.load(f)
 
+    # Load Body Type
+    txt = open('local_data.txt')
+    body_type = txt.readline()
+
     # the description
     desc = json_file[path]
 
-    result = generate(prompt("pear-shaped", desc))
+    result = generate(prompt(body_type, desc))
     pants_desc = result.split('\n')[0]
     shoes_desc = result.split('\n')[1]
     print("1: {}".format(pants_desc))
@@ -117,8 +120,8 @@ def vision(img):
         print(top_dir)
 
         # Save images 
-        recommendations(top_dir)
-        # tone_name = convert_rgb_to_names((int(avg_tone[0]), int(avg_tone[1]), int(avg_tone[2])))
+        # recommendations(top_dir)
+        # tone_name = convert_rgb_to_names((int(extracted_tones[0]), int(extracted_tones[1]), int(extracted_tones[2])))
         # cv2.putText(img, "Skin Tone: {}".format(match), (x, y), 0, 0.5, (0,0,255))
 
     # Display the output
@@ -126,7 +129,7 @@ def vision(img):
     return img
 
 
-if __name__ == '__main__': 
+# if __name__ == '__main__': 
     # cap = cv2.VideoCapture(0)
     
     # while cap.isOpened():
@@ -139,5 +142,5 @@ if __name__ == '__main__':
         
     # cap.release()
     # cv2.destroyAllWindows()
-    img = cv2.imread("demo.png")
-    vision(img)
+    # img = cv2.imread("demo.png")
+    # vision(img)
