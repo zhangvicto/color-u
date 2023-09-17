@@ -4,7 +4,7 @@ import io
 import numpy as np
 import webcolors
 
-colors = ['black', 'blue', 'brown', 'beige', 'orange', 'white', 'red', 'green', 'gold', 'purple', 'charcoal', 'grey', 'khaki', 'pink']
+colors = ['black', 'blue', 'brown', 'beige', 'orange', 'yellow', 'white', 'red', 'green', 'gold', 'purple', 'charcoal', 'grey', 'khaki', 'pink']
 
 def color_search(desc): 
     output = None
@@ -14,7 +14,6 @@ def color_search(desc):
 
     return output
 
-
 df = pd.read_parquet("clothes.parquet")
 
 for bytes, desc in df.itertuples(index=False):
@@ -23,4 +22,3 @@ for bytes, desc in df.itertuples(index=False):
     dir = color_search(desc)
     if dir != None: 
         image.save('./dataset/' + dir + '/' + desc.replace(' ', '_')[0:20] +'.jpg')
-        
