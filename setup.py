@@ -123,6 +123,8 @@ def vision(img):
 
     # Display the output
     # cv2.imshow('img', img)
+    return img
+
 
 if __name__ == '__main__': 
     # cap = cv2.VideoCapture(0)
