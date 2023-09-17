@@ -11,6 +11,14 @@ export default function Result({
   imgShoes, 
   // text // description of the outfit
 }) {
+  const handlePrevious = () => {
+    window.location.href = "/cam"; // Change the URL to the correct path
+  };
+
+  const handleNext = () => {
+    window.location.href = "/"; // Change the URL to the correct path
+  };
+
   return (
     <div>
       <Image src={imgTop} />
@@ -18,6 +26,7 @@ export default function Result({
       <Image src={imgShoes} />
 
       <p>We suggest these items for your outfit!</p>
+      <Taskbar onPrevious={handlePrevious} onNext={handleNext} />
     </div>
   )
 }
