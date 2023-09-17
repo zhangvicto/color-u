@@ -1,37 +1,30 @@
-from flask import Flask, jsonify, send_from_directory, request
-from flask_cors import CORS #comment this on deployment
-from 
+from flask import Flask, jsonify, send_from_directory, send_file, request
+from flask_cors import CORS
 
 app = Flask(__name__, static_url_path='', static_folder='frontend/build')
-CORS(app) #comment this on deployment
+CORS(app)
 
 @app.route("/", defaults={'path': ''})
 def main(path):
-    return send_from_directory(app.static_folder,'index.html')
+    return "Hello"
 
-@app.route('/api/upload_image', methods=['GET', 'POST'])
-def data_design(): 
+# send_from_directory(app.static_folder,'index.html')
+
+
+# Serve Static Image
+@app.route('/api/pants', methods=['GET', 'POST'])
+def pants_images(): 
     try: 
-        data = design_data()
+        data = send_file('./cohere/pants.jpg')
         return data, 200
     except: 
         return jsonify({'error':'error'})
 
-@app.route('/api/data/monogram', methods=['GET'])
-def data_monogram(): 
+# Serve Static Image
+@app.route('/api/shoes', methods=['GET', 'POST'])
+def shoes_images(): 
     try: 
-        data = monogram_data()
+        data = send_file('./cohere/shoes.jpg')
         return data, 200
     except: 
         return jsonify({'error':'error'})
-
-@app.route('/api/upload', methods=['POST'])
-def upload(): 
-    if request.json['table'] == 'condition_table': 
-        return insert_condition_data(request.json['condition'], request.json['sona_id'])
-    elif request.json['table'] == 'click_table': 
-        return insert_click_data(request.json['sona_id'], request.json['condition'], request.json['button_id'])
-    elif request.json['table'] == 'design_table': 
-        return insert_design_data(request.json['sona_id'], request.json['condition'], request.json['first_item'], request.json['second_item'], request.json['third_item'], request.json['complete_outfit'])
-    elif request.json['table'] == 'monogram_table': 
-        return insert_monogram_data(request.json['sona_id'], request.json['condition'], request.json['text'], request.json['location'], request.json['font'], request.json['colour'], request.json['accessory'])

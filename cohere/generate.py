@@ -7,11 +7,6 @@ from PIL import Image
 import io
 import requests
 
-stability_api = client.StabilityInference(
-    key="sk-SHPchWXM0utvDHDzHx3GsVBHVZDOgVvNQbJOuyxPa9z9ne70",
-    verbose=True,
-)
-
 API_URL = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5"
 headers = {"Authorization": "Bearer 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"}
 

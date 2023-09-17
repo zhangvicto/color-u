@@ -44,6 +44,6 @@ def SelectRandomColour(skinTone_HexCode):
     selectedSkinTone = skinTones.get(skinTone_HexCode, monk1)
 
     #Chooses a random colour from that skintone array and returns it. 
-    skinToneIndex = random.randint(0, len(selectedSkinTone))
+    skinToneIndex = random.randint(0, len(selectedSkinTone)-1)
     colorForSkinTone = selectedSkinTone[skinToneIndex]
     return colorForSkinTone
