@@ -4,6 +4,6 @@ git status
 
 git add .
 
-git commit -m "front-end part 1 done"
+git commit -m "all front-end done"
 
 git push

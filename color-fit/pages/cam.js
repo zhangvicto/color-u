@@ -16,7 +16,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <div className='text-center text-4xl font-bold text-[#d9dede] bg-[#494A43] p-12 '>Snap a selfie and explore your personalized colour fabrics!</div>
+      <div className='text-center text-4xl font-bold text-[#d9dede] bg-[#494A43] p-12 '>Snap a selfie + explore your personalized colour fabrics</div>
       <CameraComponent/>
       <Taskbar onPrevious={handlePrevious} onNext={handleNext} />
     </div>
