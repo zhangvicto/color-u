@@ -1,5 +1,6 @@
 import React from 'react';
 import BodyType from '../components/BodyType';
+import Taskbar from './taskbar';
 
 import Apple from './assets/apl.png'
 import Pear from './assets/pear.png'
@@ -8,6 +9,7 @@ import Rectangular from './assets/rect.png'
 import Hourglass from './assets/hour.png'
 
 export default function Choice() {
+
   return (
     <div>
       <div className='text-center text-4xl font-bold text-[#d9dede] bg-[#494A43] p-12 '>Which body type best describes you?</div>
@@ -39,6 +41,9 @@ export default function Choice() {
           text="Hourglass"
         /> </div>
       </div>
+
+      <Taskbar/>
+
     </div>
   )
 }
