@@ -1,10 +1,14 @@
 import React, { useState, useRef } from 'react';
+import { useRouter } from 'next/router';
 import Webcam from 'react-webcam';
 
 export default function CameraComponent() {
   const webcamRef = useRef(null); 
   const [capturedImage, setCapturedImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
+
+  const navigate = () => router.push('/processed');
 
   function Modal() {
     return (
@@ -23,19 +27,18 @@ export default function CameraComponent() {
                 Cancel
               </button>
               <button
-                onClick={closeAndSendImage}
+                onClick={() => {
+                  saveImageLocally(capturedImage);
+                  setShowModal(false);
+                  setCapturedImage(null);
+                  navigate();
+                }}
                 className="px-4 py-2 bg-blue-500 text-white rounded"
               >
                 Confirm
               </button>
             </div>
           </div>
-          {/* <div className="modal-content">
-            <h2>Captured Image</h2>
-            <img src={capturedImage} alt="Captured" />
-            <button onClick={closeModal}>Cancel</button>
-            <button onClick={closeAndSendImage}>Confirm</button>
-          </div> */}
         </div>
       </div>
     )
@@ -47,81 +50,51 @@ export default function CameraComponent() {
     setShowModal(true); // Open the modal
   };
 
-  const closeAndSendImage = async (event) => {
-    if (!capturedImage) {
-      // Handle the case where there's no captured image
-      console.log('no captured image');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', capturedImage); // 'file' should match the field name expected by the Flask server
-  
-      try {
-        const response = await fetch('http://127.0.0.1:5000/upload', {
-          method: 'POST',
-          // body: formData,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': "*",
-            'Access-Control-Allow-Methods': "GET,PUT,POST,DELETE",
-            'Access-Control-Allow-Headers': "Content-Type",
-            'Access-Control-Allow-Credentials': "true",
-          },
-          body: JSON.stringify({ image: capturedImage }),
-        });
-  
-      if (response.ok) {
-        // Handle success
-        const result = await response.text();
-        console.log('File uploaded successfully:', result);
-      } else {
-        // Handle error
-        console.error('Failed to upload image');
-      }
-    } catch (error) {
-      // Handle network errors
-      console.error('Network error', error);
-    }
-
-    // Close the modal and reset the captured image
-    setShowModal(false);
-    setCapturedImage(null);
-  };
-
   const closeModal = () => {
     // Close the modal and reset the captured image
     setShowModal(false);
     setCapturedImage(null);
   };
 
-  const handleFileInputChange = async (event) => {
-    const fileInput = event.target;
-    const file = fileInput.files[0];
-
-    if (file) {
-      const uniqueFilename = generateUniqueFilename(); // Generate a unique filename
-      const formData = new FormData();
-
-      formData.append('file', file, uniqueFilename); // Assign the unique filename to the uploaded file
-
-      try {
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (response.ok) {
-          const result = await response.text();
-          console.log('File uploaded successfully:', result);
-        } else {
-          console.error('Failed to upload file');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    }
+  const saveImageLocally = (dataURL, fileName) => {
+    // Convert the data URL to a Blob
+    const blob = dataURLtoBlob(dataURL);
+  
+    // Create a Blob URL for the Blob
+    const blobURL = URL.createObjectURL(blob);
+  
+    // Create a temporary anchor element
+    const a = document.createElement('a');
+    a.style.display = 'none';
+  
+    // Set the anchor's href attribute to the Blob URL and specify the download attribute
+    a.href = blobURL;
+    a.download = fileName || 'captured_image.jpg'; // Default file name is 'captured_image.jpg'
+  
+    // Append the anchor to the document body and trigger a click event
+    document.body.appendChild(a);
+    a.click();
+  
+    // Clean up by revoking the Blob URL and removing the anchor element
+    URL.revokeObjectURL(blobURL);
+    document.body.removeChild(a);
   };
+  
+  // Function to convert a data URL to a Blob
+  const dataURLtoBlob = (dataURL) => {
+    const parts = dataURL.split(',');
+    const contentType = parts[0].match(/:(.*?);/)[1];
+    const b64Data = atob(parts[1]);
+    const arrayBuffer = new ArrayBuffer(b64Data.length);
+    const view = new Uint8Array(arrayBuffer);
+  
+    for (let i = 0; i < b64Data.length; i++) {
+      view[i] = b64Data.charCodeAt(i);
+    }
+  
+    return new Blob([arrayBuffer], { type: contentType });
+  };
+  
 
   return (
     <div>

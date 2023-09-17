@@ -37,7 +37,7 @@ export default function Choice() {
         /> </div>
       <div className='hover:bg-[#352B25] rounded-2xl border-[#494A43] hover:text-white'> 
         <BodyType 
-          image={Hourglass} 
+          image={Hourglass}
           text="Hourglass"
         /> </div>
       </div>
