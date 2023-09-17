@@ -25,7 +25,7 @@ export default function Result({
     // Simulate data loading (e.g., API request) with a delay
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 10000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -44,11 +44,13 @@ export default function Result({
         <Loading />
       ) : (
         <div>
-          <Image src={'http://127.0.0.1:5000/api/top'} width={200} height={200} />
-          <Image src={'http://127.0.0.1:5000/api/pants'} width={200} height={200} />
-          <Image src={'http://127.0.0.1:5000/api/shoes'} width={200} height={200} />
+          <div className='text-center text-4xl font-bold text-[#d9dede] bg-[#494A43] p-12 '>We suggest these items for your outfit!</div>
+          <div className='py-36 flex flex-row justify-center items-center'>
+            <Image src={'http://127.0.0.1:5000/api/top'} className="py-2 px-1" width={200} height={200} />
+            <Image className="py-2 px-1" src={'http://127.0.0.1:5000/api/pants'} width={200} height={200} />
+            <Image className="py-2 px-1" src={'http://127.0.0.1:5000/api/shoes'} width={200} height={200} />
+          </div>
 
-          <p>We suggest these items for your outfit!</p>
           <Taskbar onPrevious={handlePrevious} onNext={handleNext} />
         </div>
       )}

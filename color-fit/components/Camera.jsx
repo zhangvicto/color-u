@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { useRouter } from 'next/router';
 import Webcam from 'react-webcam';
 
 const dataURLtoBlob = (dataURL) => {
@@ -34,9 +33,8 @@ export default function CameraComponent() {
   const webcamRef = useRef(null); 
   const [capturedImage, setCapturedImage] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
 
-  const navigate = () => router.push('/processed');
+  const navigate = () => {window.location.href = "/result"};
 
   function Modal() {
     return (
@@ -131,7 +129,7 @@ export default function CameraComponent() {
         <label htmlFor="fileInput" className='inline-block mx-4 px-4 py-2 bg-[#efdcd0] text-[#684032] border-2 border-[#684032] rounded-2xl hover:bg-[#684032] hover:text-[#efdcd0] focus:outline-none focus:ring focus:ring-[#edeeef] mx-2 font-medium'>
           Upload
         </label>
-        <input type="file" accept="image/*" id="fileInput" style={{ display: 'none' }} onChange={handleFileInputChange} />
+        <input type="file" accept="image/*" id="fileInput" style={{ display: 'none' }} onChange={setCapturedImage} />
       </div>
       {showModal && <Modal />}
     </div>
