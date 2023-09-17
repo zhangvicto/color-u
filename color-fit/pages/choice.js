@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BodyType from '../components/BodyType';
 import Taskbar from './taskbar';
 
@@ -9,13 +9,15 @@ import Rectangular from './assets/rect.png'
 import Hourglass from './assets/hour.png'
 
 export default function Choice() {
+  const [bodyType, setBodyType] = useState('');
 
   const handlePrevious = () => {
-    window.location.href = "/cam"; // Change the URL to the correct path
+    window.location.href = "/"; // Change the URL to the correct path
   };
 
   const handleNext = () => {
-    window.location.href = "/"; // Change the URL to the correct path
+    console.log(bodyType);
+    window.location.href = "/cam"; // Change the URL to the correct path
   };
 
   return (
@@ -27,26 +29,31 @@ export default function Choice() {
         <BodyType 
           image={Apple} 
           text="Apple"
+          onclick={() => setBodyType('apple')}
         /> </div>
         <div className='hover:bg-[#EAD0Ad] rounded-2xl border-[#494A43] text-[#494A43]'> 
         <BodyType 
           image={Pear} 
           text="Pear"
+          onclick={() => setBodyType('pear')}
         /> </div>
       <div className='hover:bg-[#956D44] rounded-2xl border-[#494A43] hover:text-white'> 
         <BodyType
           image={Inverted} 
           text="Inverted"
+          onclick={() => setBodyType('inverted')}
         /> </div>
       <div className='hover:bg-[#684032] rounded-2xl border-[#494A43] hover:text-white'> 
         <BodyType 
           image={Rectangular} 
           text="Rectangular"
+          onclick={() => setBodyType('rectangular')}
         /> </div>
       <div className='hover:bg-[#352B25] rounded-2xl border-[#494A43] hover:text-white'> 
         <BodyType 
           image={Hourglass}
           text="Hourglass"
+          onclick={() => setBodyType('hourglass')}
         /> </div>
       </div>
 
