@@ -10,6 +10,14 @@ import Hourglass from './assets/hour.png'
 
 export default function Choice() {
 
+  const handlePrevious = () => {
+    window.location.href = "/cam"; // Change the URL to the correct path
+  };
+
+  const handleNext = () => {
+    window.location.href = "/"; // Change the URL to the correct path
+  };
+
   return (
     <div>
       <div className='text-center text-4xl font-bold text-[#d9dede] bg-[#494A43] p-12 '>Which body type best describes you?</div>
@@ -42,7 +50,7 @@ export default function Choice() {
         /> </div>
       </div>
 
-      <Taskbar/>
+      <Taskbar onPrevious={handlePrevious} onNext={handleNext} />
 
     </div>
   )

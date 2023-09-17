@@ -1,3 +1,5 @@
 /ai_clothes_suggestions/data/
 /ai_clothes_suggestions/__pycache__
-/node_modules
+/openLLM/__pycache__
+/color-fit/node_modules
+__pycache__

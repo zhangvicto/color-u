@@ -94,7 +94,7 @@ def main():
     test_loader = torch.utils.data.DataLoader(
         TripletImageLoader(args, 'test', meta_data,
                            transform=transforms.Compose([
-                               transforms.Scale(112),
+                               transforms.Resize(112),
                                transforms.CenterCrop(112),
                                transforms.ToTensor(),
                                normalize,
@@ -113,7 +113,7 @@ def main():
         TripletImageLoader(args, 'train', meta_data,
                            text_dim=text_feature_dim,
                            transform=transforms.Compose([
-                               transforms.Scale(112),
+                               transforms.Resize(112),
                                transforms.CenterCrop(112),
                                transforms.RandomHorizontalFlip(),
                                transforms.ToTensor(),
@@ -123,7 +123,7 @@ def main():
     val_loader = torch.utils.data.DataLoader(
         TripletImageLoader(args, 'valid', meta_data,
                            transform=transforms.Compose([
-                               transforms.Scale(112),
+                               transforms.Resize(112),
                                transforms.CenterCrop(112),
                                transforms.ToTensor(),
                                normalize,
@@ -235,7 +235,7 @@ def test(test_loader, tnet):
     # switch to evaluation mode
     tnet.eval()
     embeddings = []
-    
+
     # for test/val data we get images only from the data loader
     for batch_idx, images in enumerate(test_loader):
         if args.cuda:
@@ -309,4 +309,4 @@ def adjust_learning_rate(optimizer, epoch):
         param_group['lr'] = lr
 
 if __name__ == '__main__':
-    main()    
+    main()
