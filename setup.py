@@ -93,7 +93,9 @@ def vision(img):
         cv2.putText(img, "Skin Tone: {}".format(match), (x, y), 0, 0.5, (0,0,255))
 
     # Display the output
-    cv2.imshow('img', img)
+    # cv2.imshow('img', img)
+    return img
+
 
 if __name__ == '__main__': 
     cap = cv2.VideoCapture(0)

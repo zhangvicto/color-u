@@ -1,13 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Webcam from 'react-webcam';
 
-// Function to generate a unique filename based on a timestamp
-function generateUniqueFilename() {
-  const timestamp = new Date().getTime();
-  const randomId = Math.random().toString(36).substring(2, 10); // Generate a random identifier
-  return `upload_${timestamp}_${randomId}.jpg`;
-}
-
 export default function CameraComponent() {
   const webcamRef = useRef(null); 
   const [capturedImage, setCapturedImage] = useState(null);
@@ -61,27 +54,22 @@ export default function CameraComponent() {
       return;
     }
 
-    const fileInput = event.target;
-    const file = fileInput.files[0];
-  
     const formData = new FormData();
     formData.append('file', capturedImage); // 'file' should match the field name expected by the Flask server
   
-    if (file) {
-      // const uniqueFilename = generateUniqueFilename(); // Generate a unique filename
-      // const formData = new FormData();
-
-      // formData.append('file', file, uniqueFilename); // Assign the unique filename to the uploaded file
-
       try {
-      const response = await fetch('http://127.0.0.1:5000/api/upload', {
-        method: 'POST',
-        // body: formData,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ image: capturedImage }),
-      });
+        const response = await fetch('http://127.0.0.1:5000/upload', {
+          method: 'POST',
+          // body: formData,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': "*",
+            'Access-Control-Allow-Methods': "GET,PUT,POST,DELETE",
+            'Access-Control-Allow-Headers': "Content-Type",
+            'Access-Control-Allow-Credentials': "true",
+          },
+          body: JSON.stringify({ image: capturedImage }),
+        });
   
       if (response.ok) {
         // Handle success
@@ -94,7 +82,7 @@ export default function CameraComponent() {
     } catch (error) {
       // Handle network errors
       console.error('Network error', error);
-    }}
+    }
 
     // Close the modal and reset the captured image
     setShowModal(false);
