@@ -21,9 +21,9 @@ export default function Result({
 
   return (
     <div>
-      <Image src={imgTop} />
-      <Image src={imgPants} />
-      <Image src={imgShoes} />
+      <Image src={'http://127.0.0.1:5000/api/top'} width={200} height={200} />
+      <Image src={'http://127.0.0.1:5000/api/pants'} width={200} height={200} />
+      <Image src={'http://127.0.0.1:5000/api/shoes'} width={200} height={200} />
 
       <p>We suggest these items for your outfit!</p>
       <Taskbar onPrevious={handlePrevious} onNext={handleNext} />

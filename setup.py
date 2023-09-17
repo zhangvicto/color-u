@@ -4,6 +4,7 @@ from scipy.spatial import KDTree
 from colour_selection import SelectRandomColour, SelectTopColor, SelectRandomTop
 import json
 from cohere_gen.generate import generate, prompt, store_image
+from PIL import Image
 
 def convert_rgb_to_names(rgb_tuple):
     # a dictionary of all the hex and their respective names in css3
@@ -115,8 +116,9 @@ def vision(img):
         print(color)
 
         top_dir = SelectRandomTop(color)
-        # some = Image.open("./dataset/" + color + "/" + top_dir)
-        # some.show()
+        top = Image.open("./dataset/" + color + "/" + top_dir)
+        top.save("top.jpg")
+        
         print(top_dir)
 
         # Save images 
