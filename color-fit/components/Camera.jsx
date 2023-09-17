@@ -97,14 +97,24 @@ export default function CameraComponent() {
   
 
   return (
-    <div>
-      <h1>Make sure you give your laptop camera access.</h1>
-      <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
-      <button className="bg-yellow-500" onClick={capture}>Capture</button>
+    <div className='flex flex-col items-center'>
+      <div className='flex justify-center m-5 mb-3'>
+        <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" width={500} height={500}/>
+        {capturedImage && (
+          <div className='absolute inset-0 flex items-center justify-center'>
+            <img src={capturedImage} alt='Captured' className='w-full h-full object-cover' />
+          </div>
+        )}
       
-      {showModal && (
-        <Modal className="flex justify-center items-center" />
-      )}
+      </div>
+      <div className="flex justify-center m-2 mb-5 mt-1 mr-15">
+        <button className='inline-block px-4 py-2 bg-[#efdcd0] text-[#494a43] border-2 border-[#684032] rounded-2xl hover:bg-[#684032] hover:text-[#efdcd0] focus:outline-none focus:ring focus:ring-[#edeeef] mx-auto font-medium' onClick={capture}>
+          Capture
+        </button>
+        <p className='italic text-sm ml-24 mt-2'>Make sure you give your laptop camera access.</p>
+        </div>
+      {showModal && <Modal />}
     </div>
+    
   );
 };
