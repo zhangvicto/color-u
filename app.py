@@ -11,6 +11,13 @@ def upload_file():
 
     return send_file(processed_dir)
 
+@app.route('/receive_data', methods=['POST'])
+def receive_data():
+    data = request.json  # Assuming the data is sent as JSON
+    # Process the received data here
+    # VICTOR TODO
+    return jsonify({"message": "Data received successfully"})
+
 # @app.route('/captured', methods=['GET'])
 # def processed():
 #     try:

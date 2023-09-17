@@ -20,6 +20,27 @@ export default function Choice() {
     window.location.href = "/cam"; // Change the URL to the correct path
   };
 
+  const sendData = async () => {
+    try {
+      const response = await fetch('http://your-flask-app-url/receive_data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyType),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log('Server Response:', responseData.message);
+      } else {
+        console.error('Request failed');
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+    }
+  }
+
   return (
     <div>
       <div className='text-center text-4xl font-bold text-[#d9dede] bg-[#494A43] p-12 '>Which body type best describes you?</div>
