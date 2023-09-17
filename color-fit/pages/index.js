@@ -15,10 +15,10 @@ export default function App() {
 
         <div className="w-1/2 p-8">
           <p className="text-center text-2xl ml-26 mt-10 pl-14">
-            Our computer vision algorithm detects your skin color and your
-            undertone to help determine what color fabrics would suit you. We
-            also ask for your body type and take the weather into account when
-            we provide suggestions on what clothing you should get.
+            Our computer vision algorithm detects your skin color and undertone 
+            to help determine what color fabrics would suit you best. We also 
+            take your body type into account when we provide suggestion on 
+            what clothing you should get.
           </p>
           <p className="text-center italic font-bold text-2xl mt-20 mb-9 pl-14">
             Start your style consult now!

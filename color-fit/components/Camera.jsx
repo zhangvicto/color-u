@@ -48,6 +48,11 @@ export default function CameraComponent() {
     )
   }
 
+  const removeImage = () => {
+    setCapturedImage(null);
+    setShowModal(false);
+  };
+  
   const capture = async () => {
     const imageSrc = await webcamRef.current.getScreenshot();
     setCapturedImage(imageSrc);
