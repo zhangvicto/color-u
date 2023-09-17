@@ -14,7 +14,8 @@ def main(path):
 @app.route("/api/body_type", methods=['POST'])
 def data_body_type(): 
     data = request.json["body_type"]
-    return update_body_type(data), 200
+    update_body_type(data)
+    return data, 200
 
 # Serve Static Image
 @app.route('/api/pants', methods=['GET'])
@@ -40,7 +41,9 @@ def upload_image():
     
     img = data_uri_to_cv2_img(uri)
 
-    return vision(img), 200
+    vision(img)
+
+    return uri, 200
 
 if __name__ == '__main__':
     app.run(debug=True)

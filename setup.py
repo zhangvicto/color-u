@@ -120,13 +120,13 @@ def vision(img):
         print(top_dir)
 
         # Save images 
-        # recommendations(top_dir)
+        recommendations(top_dir)
         # tone_name = convert_rgb_to_names((int(extracted_tones[0]), int(extracted_tones[1]), int(extracted_tones[2])))
         # cv2.putText(img, "Skin Tone: {}".format(match), (x, y), 0, 0.5, (0,0,255))
 
     # Display the output
     # cv2.imshow('img', img)
-    return img
+    # return 200
 
 
 # if __name__ == '__main__': 
