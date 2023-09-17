@@ -74,13 +74,13 @@ export default function CameraComponent() {
       // formData.append('file', file, uniqueFilename); // Assign the unique filename to the uploaded file
 
       try {
-      const response = await fetch('/upload', {
+      const response = await fetch('http://127.0.0.1:5000/api/upload', {
         method: 'POST',
         // body: formData,
-        body: JSON.stringify({ image: capturedImage }),
         headers: {
-            'Content-Type': 'application/json',
-          },
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: capturedImage }),
       });
   
       if (response.ok) {
