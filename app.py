@@ -18,35 +18,5 @@ def receive_data():
     # VICTOR TODO
     return jsonify({"message": "Data received successfully"})
 
-# @app.route('/captured', methods=['GET'])
-# def processed():
-#     try:
-#         # Process the uploaded file as needed
-#         processedImage = setup.vision("C:\Users\isabe\Downloads\captured_image.jpg")  # Call your image processing function
-
-#         # Return the image as a response with appropriate content type
-#         return send_file(
-#             processedImage, 
-#             mimetype='image/png'
-#         )
-
-#     except Exception as e:
-#         return str(e)
-    
-# @app.route('/process', methods=['GET'])
-# def process_file():
-#     if 'file' not in request.files:
-#         return "No file part"
-    
-#     file = request.files['file']
-
-#     if file.filename == '':
-#         return "No selected file"
-
-#     processedImage = setup.vision(file)  # Call your image processing function
-
-#     # Return the image as a response with appropriate content type
-#     return send_file(processedImage, mimetype='image/jpeg')
-
 if __name__ == '__main__':
     app.run(debug=True)
