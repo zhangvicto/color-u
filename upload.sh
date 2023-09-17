@@ -4,6 +4,6 @@ git status
 
 git add .
 
-git commit -m "finished design for body shape screen"
+git commit -m "front-end part 1 done"
 
 git push

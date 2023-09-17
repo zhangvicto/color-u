@@ -15,23 +15,23 @@ export default function CameraComponent() {
 
   function Modal() {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center h-screen w-screen"> {/* whole modal */}
-        <div className='fixed inset-0 h-screen bg-gray-300 bg-opacity-30'> {/* modal overlay */}
-          <div className="bg-green-500 w-1/2 h-auto p-4 bg-black rounded-lg border-2 shadow-lg text-white z-50"> {/* modal content; TODO: center on screen */} 
-            <h2 className="text-lg font-semibold mb-2">Captured Image:</h2>
+      <div className="fixed inset-0 z-50 flex items-center justify-center mt-10"> {/* whole modal */}
+        <div className="absolute inset-0 flex items-center justify-center ">
+          <div className="bg-[#e1e5e6] p-4 w-auto h-auto rounded-lg border-2 shadow-lg text-white border-2 border-[#494a43]"> {/* modal content; TODO: center on screen */} 
+            <h2 className="text-[#494a43] text-lg font-semibold mb-2">Captured Image:</h2>
             <img src={capturedImage} alt="Captured" className="mb-4" />
   
             {/* Buttons */}
-            <div className="flex justify-end">
+            <div className="right-0 flex justify-end">
               <button
                 onClick={closeModal}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded mr-2"
+                className='px-4 py-2 bg-[#efdcd0] text-[#684032] border-2 border-[#684032] rounded-2xl focus:outline-none focus:ring focus:ring-[#edeeef] mx-4 font-medium'
               >
                 Cancel
               </button>
               <button
                 onClick={closeAndSendImage}
-                className="px-4 py-2 bg-blue-500 text-white rounded"
+                className='px-4 py-2 bg-[#684032] text-[#efdcd0] border-2 border-[#684032] rounded-2xl focus:outline-none focus:ring focus:ring-[#edeeef] mx-0 font-medium'
               >
                 Confirm
               </button>
@@ -138,22 +138,24 @@ export default function CameraComponent() {
   return (
     <div className='flex flex-col items-center'>
       <div className='flex justify-center m-5 mb-3'>
-        <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" width={500} height={500}/>
-        {capturedImage && (
-          <div className='absolute inset-0 flex items-center justify-center'>
-            <img src={capturedImage} alt='Captured' className='w-full h-full object-cover' />
-          </div>
+        {capturedImage ? (
+          <img src={capturedImage} alt="Captured" className="w-full h-full" />
+        ) : (
+          <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" width={500} height={500} />
         )}
-      
       </div>
-      <div className="flex justify-center m-2 mb-5 mt-1 mr-15">
-        <button className='inline-block px-4 py-2 bg-[#efdcd0] text-[#494a43] border-2 border-[#684032] rounded-2xl hover:bg-[#684032] hover:text-[#efdcd0] focus:outline-none focus:ring focus:ring-[#edeeef] mx-auto font-medium' onClick={capture}>
+      <div className="flex justify-center mb-5 mt-1 mr-15">
+        <button className='inline-block px-4 py-2 bg-[#efdcd0] text-[#684032] border-2 border-[#684032] rounded-2xl hover:bg-[#684032] hover:text-[#efdcd0] focus:outline-none focus:ring focus:ring-[#edeeef] mx-2 font-medium' onClick={capture}>
           Capture
         </button>
-        <p className='italic text-sm ml-24 mt-2'>Make sure you give your laptop camera access.</p>
-        </div>
+  
+        <label htmlFor="fileInput" className='inline-block mx-4 px-4 py-2 bg-[#efdcd0] text-[#684032] border-2 border-[#684032] rounded-2xl hover:bg-[#684032] hover:text-[#efdcd0] focus:outline-none focus:ring focus:ring-[#edeeef] mx-2 font-medium'>
+          Upload
+        </label>
+        <input type="file" accept="image/*" id="fileInput" style={{ display: 'none' }} onChange={handleFileInputChange} />
+      </div>
       {showModal && <Modal />}
     </div>
-    
   );
+  
 };

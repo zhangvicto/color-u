@@ -25,7 +25,7 @@ export default function App() {
           </p>
           <a href="/cam">
             <p className="fixed bottom-2 left-0 right-0 p-4 flex justify-between">
-              <button className="startbutton px-8 py-2 mr-10 bg-[#efdcd0] text-[#494a43] border-2 border-[#684032] rounded-2xl hover:bg-[#684032] hover:text-[#efdcd0] focus:outline-none focus:ring focus:ring-[#edeeef] mx-auto font-medium">
+              <button className="startbutton px-8 py-2 mr-10 bg-[#efdcd0] text-[#684032] border-2 border-[#684032] rounded-2xl hover:bg-[#684032] hover:text-[#efdcd0] focus:outline-none focus:ring focus:ring-[#edeeef] mx-auto font-medium">
                 Start
               </button>
             </p>
