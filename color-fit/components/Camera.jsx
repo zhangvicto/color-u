@@ -15,7 +15,7 @@ export default function CameraComponent() {
 
   function Modal() {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center mt-10"> {/* whole modal */}
+      <div className="fixed inset-0 z-50 flex items-center justify-center mt-28"> {/* whole modal */}
         <div className="absolute inset-0 flex items-center justify-center ">
           <div className="bg-[#e1e5e6] p-4 w-auto h-auto rounded-lg border-2 shadow-lg text-white border-2 border-[#494a43]"> {/* modal content; TODO: center on screen */} 
             <h2 className="text-[#494a43] text-lg font-semibold mb-2">Captured Image:</h2>
@@ -48,11 +48,6 @@ export default function CameraComponent() {
     )
   }
 
-  const removeImage = () => {
-    setCapturedImage(null);
-    setShowModal(false);
-  };
-  
   const capture = async () => {
     const imageSrc = await webcamRef.current.getScreenshot();
     setCapturedImage(imageSrc);
@@ -149,7 +144,7 @@ export default function CameraComponent() {
           <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" width={500} height={500} />
         )}
       </div>
-      <div className="flex justify-center mb-5 mt-1 mr-15">
+      <div className="flex justify-center mb-6 mt-3 mr-15">
         <button className='inline-block px-4 py-2 bg-[#efdcd0] text-[#684032] border-2 border-[#684032] rounded-2xl hover:bg-[#684032] hover:text-[#efdcd0] focus:outline-none focus:ring focus:ring-[#edeeef] mx-2 font-medium' onClick={capture}>
           Capture
         </button>

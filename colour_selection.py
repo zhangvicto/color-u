@@ -1,7 +1,7 @@
-import os
-import json
-import sys
 import random
+from webcolors import hex_to_rgb, name_to_rgb
+from scipy.spatial import KDTree
+import os
 
 #Global Variables: --------------------------------------------------------------------------------------------
 #Monk 10: Bokara Gray
@@ -32,18 +32,41 @@ monk3 = ["#ba9f80", "#e3ba8e", "#ff9966", "#00aaae", "#2fa5db", "#67c9eb", "#35c
 monk2 = ["#bdf2fc", "#fd2501", "#fffc62", "#c8fc80", "#955a6c", "#303361", "#000000", "#93f895"]
 
 #Monk 1: Linen
-monk1 = ["#d7f6fa", "#fcdfe0", "#f9e7fe", "#fefce5", "#d9d9d9", "#efefef", "#e9dfcf", "#eld2c0"]
+monk1 = ["#d7f6fa", "#fcdfe0", "#f9e7fe", "#fefce5", "#d9d9d9", "#efefef", "#e9dfcf"] #  "#eid2c0"]
 
 #Dictionary of all skintones and their hexcode: 
 skinTones = {"#f6ede4": monk1, "#f3e7bd": monk2, "#f7ead0": monk3, "#eadaba": monk4, "#d7bd96": monk5, "#a07e56": monk6, "#825c43": monk7, "#604134": monk8, "#3a312a": monk9, "#292420": monk10}
 
-#Helper Function: --------------------------------------------------------------------------------------------
+#Helper Functions: --------------------------------------------------------------------------------------------
 #The input of the function should be a string ("#000000") of an hexcode indicating a skinTone colour. 
 def SelectRandomColour(skinTone_HexCode):
     #Selects which array to choose from depending on the value, chooses monk1 by default just in case. 
     selectedSkinTone = skinTones.get(skinTone_HexCode, monk1)
 
     #Chooses a random colour from that skintone array and returns it. 
-    skinToneIndex = random.randint(0, len(selectedSkinTone))
+    skinToneIndex = random.randint(0, len(selectedSkinTone)-1)
     colorForSkinTone = selectedSkinTone[skinToneIndex]
     return colorForSkinTone
+
+def SelectTopColor(hex): 
+    outfit_colors = ['black', 'blue', 'brown', 'beige', 'orange', 'yellow', 'white', 'red', 'green', 'gold', 'purple', 'charcoal', 'grey', 'khaki', 'pink']
+    
+    rgb_values = []
+    for color in outfit_colors: 
+        try: 
+            rgb_values.append(name_to_rgb(color))
+        except: 
+            rgb_values.append((54,69,79))
+
+    rgb_tuple = hex_to_rgb(hex)
+    
+    kdt_db = KDTree(rgb_values)
+    distance, index = kdt_db.query(rgb_tuple)
+    return outfit_colors[index]
+
+def SelectRandomTop(color): 
+    files = [f for f in os.listdir('./dataset/' + color + '/') if not f.startswith('.')]
+    random_index = random.randint(0, len(files)-1)
+    
+    # Return file path, file description for LLM
+    return files[random_index]

@@ -17,13 +17,13 @@ export default function App() {
           <p className="text-center text-2xl ml-26 mt-10 pl-14">
             Our computer vision algorithm detects your skin color and undertone 
             to help determine what color fabrics would suit you best. We also 
-            take your body type into account when we provide suggestion on 
+            take your body type into account when we provide suggestions on 
             what clothing you should get.
           </p>
           <p className="text-center italic font-bold text-2xl mt-20 mb-9 pl-14">
             Start your style consult now!
           </p>
-          <a href="/cam">
+          <a href="/choice">
             <p className="fixed bottom-2 left-0 right-0 p-4 flex justify-between">
               <button className="startbutton px-8 py-2 mr-10 bg-[#efdcd0] text-[#684032] border-2 border-[#684032] rounded-2xl hover:bg-[#684032] hover:text-[#efdcd0] focus:outline-none focus:ring focus:ring-[#edeeef] mx-auto font-medium">
                 Start
