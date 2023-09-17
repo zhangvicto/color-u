@@ -40,7 +40,6 @@ export default function Result({
 
   return (
     <div>
-<<<<<<< HEAD
       {isLoading ? (
         <Loading />
       ) : (
@@ -55,17 +54,6 @@ export default function Result({
           <Taskbar onPrevious={handlePrevious} onNext={handleNext} />
         </div>
       )}
-=======
-      <div className='text-center text-4xl font-bold text-[#d9dede] bg-[#494A43] p-12 '>We suggest these items for your outfit!</div>
-      <Image src={imgTop} />
-      <Image src={imgPants} />
-      <Image src={imgShoes} />
-
-      <div className='flex flex-row justify-between items-center py-12 px-4 rounded-2xl mx-8 my-9'>
-      <Taskbar onPrevious={handlePrevious} onNext={handleNext} />
-      </div>
-
->>>>>>> aeb0308e5d67a0104b004d56f734ccdfdc267908
     </div>
   )
 }

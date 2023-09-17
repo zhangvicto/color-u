@@ -2,10 +2,24 @@ import React, { useState, useRef } from 'react';
 import Webcam from 'react-webcam';
 
 // Function to generate a unique filename based on a timestamp
-function generateUniqueFilename() {
-  const timestamp = new Date().getTime();
-  const randomId = Math.random().toString(36).substring(2, 10); // Generate a random identifier
-  return `upload_${timestamp}_${randomId}.jpg`;
+// function generateUniqueFilename() {
+//   const timestamp = new Date().getTime();
+//   const randomId = Math.random().toString(36).substring(2, 10); // Generate a random identifier
+//   return `upload_${timestamp}_${randomId}.jpg`;
+// }
+
+function uploadImage(imageURL) {
+  //const blob_data = dataURLtoBlob(imageURL)
+
+  //console.log(blob_data)
+
+  fetch('http://127.0.0.1:5000/api/upload', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json' },
+      body: JSON.stringify({image: imageURL})
+  })
+      .then(response => response.json())
+      .catch(error => console.log('error', error));
 }
 
 export default function CameraComponent() {
@@ -62,52 +76,48 @@ export default function CameraComponent() {
     setShowModal(true); // Open the modal
   };
 
-  const closeAndSendImage = async (event) => {
-    if (!capturedImage) {
-      // Handle the case where there's no captured image
-      console.log('no captured image');
-      return;
-    }
+  // const closeAndSendImage = async (event) => {
+  //   if (!capturedImage) {
+  //     // Handle the case where there's no captured image
+  //     console.log('no captured image');
+  //     return;
+  //   }
 
-    const fileInput = event.target;
-    const file = fileInput.files[0];
+  //   const fileInput = event.target;
+  //   const file = fileInput.files[0];
   
-    const formData = new FormData();
-    formData.append('file', capturedImage); // 'file' should match the field name expected by the Flask server
+  //   const formData = new FormData();
+  //   formData.append('file', capturedImage); // 'file' should match the field name expected by the Flask server
   
-    if (file) {
-      // const uniqueFilename = generateUniqueFilename(); // Generate a unique filename
-      // const formData = new FormData();
+  //   if (file) {
 
-      // formData.append('file', file, uniqueFilename); // Assign the unique filename to the uploaded file
-
-      try {
-      const response = await fetch('http://127.0.0.1:5000/api/upload', {
-        method: 'POST',
-        // body: formData,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ image: capturedImage }),
-      });
+  //     try {
+  //     const response = await fetch('http://127.0.0.1:5000/api/upload', {
+  //       method: 'POST',
+  //       // body: formData,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ image: capturedImage }),
+  //     });
   
-      if (response.ok) {
-        // Handle success
-        const result = await response.text();
-        console.log('File uploaded successfully:', result);
-      } else {
-        // Handle error
-        console.error('Failed to upload image');
-      }
-    } catch (error) {
-      // Handle network errors
-      console.error('Network error', error);
-    }}
+  //     if (response.ok) {
+  //       // Handle success
+  //       const result = await response.text();
+  //       console.log('File uploaded successfully:', result);
+  //     } else {
+  //       // Handle error
+  //       console.error('Failed to upload image');
+  //     }
+  //   } catch (error) {
+  //     // Handle network errors
+  //     console.error('Network error', error);
+  //   }}
 
-    // Close the modal and reset the captured image
-    setShowModal(false);
-    setCapturedImage(null);
-  };
+  //   // Close the modal and reset the captured image
+  //   setShowModal(false);
+  //   setCapturedImage(null);
+  // };
 
   const closeModal = () => {
     // Close the modal and reset the captured image
@@ -115,33 +125,33 @@ export default function CameraComponent() {
     setCapturedImage(null);
   };
 
-  const handleFileInputChange = async (event) => {
-    const fileInput = event.target;
-    const file = fileInput.files[0];
+  // const handleFileInputChange = async (event) => {
+  //   const fileInput = event.target;
+  //   const file = fileInput.files[0];
 
-    if (file) {
-      const uniqueFilename = generateUniqueFilename(); // Generate a unique filename
-      const formData = new FormData();
+  //   if (file) {
+  //     const uniqueFilename = generateUniqueFilename(); // Generate a unique filename
+  //     const formData = new FormData();
 
-      formData.append('file', file, uniqueFilename); // Assign the unique filename to the uploaded file
+  //     formData.append('file', file, uniqueFilename); // Assign the unique filename to the uploaded file
 
-      try {
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          body: formData,
-        });
+  //     try {
+  //       const response = await fetch('/api/upload', {
+  //         method: 'POST',
+  //         body: formData,
+  //       });
 
-        if (response.ok) {
-          const result = await response.text();
-          console.log('File uploaded successfully:', result);
-        } else {
-          console.error('Failed to upload file');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    }
-  };
+  //       if (response.ok) {
+  //         const result = await response.text();
+  //         console.log('File uploaded successfully:', result);
+  //       } else {
+  //         console.error('Failed to upload file');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //     }
+  //   }
+  // };
 
   return (
     <div className='flex flex-col items-center'>
