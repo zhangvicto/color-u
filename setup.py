@@ -1,8 +1,9 @@
 import cv2 
-import numpy as np
 from webcolors import CSS3_HEX_TO_NAMES, hex_to_rgb, rgb_to_hex
 from scipy.spatial import KDTree
-from PIL import Image
+from colour_selection import SelectRandomColour, SelectTopColor, SelectRandomTop
+import json
+from cohere_gen.generate import generate, prompt, store_image
 
 def convert_rgb_to_names(rgb_tuple):
     # a dictionary of all the hex and their respective names in css3
@@ -35,6 +36,26 @@ def separate(image):
     backSub = cv2.createBackgroundSubtractorMOG2()
     mask = backSub.apply(image)
     return mask
+
+def recommendations(path): 
+    f = open('./dataset/descriptions.json',)
+    json_file = json.load(f)
+
+    # Load Body Type
+    txt = open('local_data.txt')
+    body_type = txt.readline()
+
+    # the description
+    desc = json_file[path]
+
+    result = generate(prompt(body_type, desc))
+    pants_desc = result.split('\n')[0]
+    shoes_desc = result.split('\n')[1]
+    print("1: {}".format(pants_desc))
+    print("2: {}".format(shoes_desc))
+
+    store_image("pants", pants_desc)
+    store_image("shoes", shoes_desc)
 
 # Human Identification
 def vision(img): 
@@ -89,24 +110,37 @@ def vision(img):
         # tone_hex = rgb_to_hex((int(avg_tone[0]), int(avg_tone[1]), int(avg_tone[2])))
 
         match = closest_tone_match((int(extracted_tones[0]), int(extracted_tones[1]), int(extracted_tones[2])))
-        # tone_name = convert_rgb_to_names((int(avg_tone[0]), int(avg_tone[1]), int(avg_tone[2])))
-        cv2.putText(img, "Skin Tone: {}".format(match), (x, y), 0, 0.5, (0,0,255))
+
+        color = SelectTopColor(SelectRandomColour(match))
+        print(color)
+
+        top_dir = SelectRandomTop(color)
+        # some = Image.open("./dataset/" + color + "/" + top_dir)
+        # some.show()
+        print(top_dir)
+
+        # Save images 
+        recommendations(top_dir)
+        # tone_name = convert_rgb_to_names((int(extracted_tones[0]), int(extracted_tones[1]), int(extracted_tones[2])))
+        # cv2.putText(img, "Skin Tone: {}".format(match), (x, y), 0, 0.5, (0,0,255))
 
     # Display the output
     # cv2.imshow('img', img)
-    return img
+    # return 200
 
 
-if __name__ == '__main__': 
-    cap = cv2.VideoCapture(0)
+# if __name__ == '__main__': 
+    # cap = cv2.VideoCapture(0)
     
-    while cap.isOpened():
-        ret, img = cap.read()
+    # while cap.isOpened():
+    #     ret, img = cap.read()
 
-        vision(img)
+    #     vision(img)
 
-        if cv2.waitKey(1) == ord('q'):
-            break
+    #     if cv2.waitKey(1) == ord('q'):
+    #         break
         
-    cap.release()
-    cv2.destroyAllWindows()
+    # cap.release()
+    # cv2.destroyAllWindows()
+    # img = cv2.imread("demo.png")
+    # vision(img)

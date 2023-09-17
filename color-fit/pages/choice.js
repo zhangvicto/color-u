@@ -8,6 +8,16 @@ import Inverted from './assets/inv.png'
 import Rectangular from './assets/rect.png'
 import Hourglass from './assets/hour.png'
 
+function logBodyType(bodyType) {
+  fetch('http://127.0.0.1:5000/api/body_type', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({body_type: bodyType})
+  })
+      .then(response => response.json())
+      .catch(error => console.log('error', error));
+}
+
 export default function Choice() {
   const [bodyType, setBodyType] = useState('');
 
@@ -78,7 +88,7 @@ export default function Choice() {
         /> </div>
       </div>
 
-      <Taskbar onPrevious={handlePrevious} onNext={handleNext} />
+      <Taskbar onPrevious={handlePrevious} onNext={logBodyType(bodyType)} />
 
     </div>
   )
