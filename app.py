@@ -1,28 +1,52 @@
 from flask import Flask, jsonify, send_from_directory, request
 from flask_cors import CORS #comment this on deployment
-from 
+import setup
 
-app = Flask(__name__, static_url_path='', static_folder='frontend/build')
+
+app = Flask(__name__, static_url_path='', static_folder='color-fit/build')
 CORS(app) #comment this on deployment
 
 @app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return "No file part"
+def upload_image():
+    try:
+        if 'file' not in request.files:
+            return "No file part"
 
-    file = request.files['file']
+        file = request.files['file']
 
-    if file.filename == '':
-        return "No selected file"
+        if file.filename == '':
+            return "No selected file"
 
-    # You can process the uploaded file here
-    # For example, save it to a directory
-    file.save('uploads/' + file.filename)
+        # Process the uploaded image with your computer vision model
+        # You can pass 'file' to your model for processing here
+        setup.vision(file)
 
-    return "File uploaded successfully"
+        # Return a response or result from your model
+        result = "Image processed successfully"
+        return result
+
+    except Exception as e:
+        return str(e)
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/get_latest_image', methods=['GET'])
+def get_latest_image():
+    try:
+        global latest_image_filename
+
+        if latest_image_filename:
+            # Specify the path to the directory where uploaded images are stored
+            image_path = os.path.join('uploads', latest_image_filename)
+
+            # Use send_file to send the latest image data as a response
+            return send_file(image_path, mimetype='image/jpeg')
+
+        return "No latest image found"
+
+    except Exception as e:
+        return str(e)
 
 """
 @app.route("/", defaults={'path': ''})

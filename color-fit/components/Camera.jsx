@@ -1,6 +1,13 @@
 import React, { useState, useRef } from 'react';
 import Webcam from 'react-webcam';
 
+// Function to generate a unique filename based on a timestamp
+function generateUniqueFilename() {
+  const timestamp = new Date().getTime();
+  const randomId = Math.random().toString(36).substring(2, 10); // Generate a random identifier
+  return `upload_${timestamp}_${randomId}.jpg`;
+}
+
 export default function CameraComponent() {
   const webcamRef = useRef(null); 
   const [capturedImage, setCapturedImage] = useState(null);
@@ -47,20 +54,30 @@ export default function CameraComponent() {
     setShowModal(true); // Open the modal
   };
 
-  const closeAndSendImage = async () => {
+  const closeAndSendImage = async (event) => {
     if (!capturedImage) {
       // Handle the case where there's no captured image
       console.log('no captured image');
       return;
     }
+
+    const fileInput = event.target;
+    const file = fileInput.files[0];
   
     const formData = new FormData();
     formData.append('file', capturedImage); // 'file' should match the field name expected by the Flask server
   
-    try {
+    if (file) {
+      // const uniqueFilename = generateUniqueFilename(); // Generate a unique filename
+      // const formData = new FormData();
+
+      // formData.append('file', file, uniqueFilename); // Assign the unique filename to the uploaded file
+
+      try {
       const response = await fetch('/upload', {
         method: 'POST',
-        body: formData,
+        // body: formData,
+        body: JSON.stringify({ image: capturedImage }),
         headers: {
             'Content-Type': 'application/json',
           },
@@ -68,7 +85,8 @@ export default function CameraComponent() {
   
       if (response.ok) {
         // Handle success
-        console.log('Image uploaded successfully');
+        const result = await response.text();
+        console.log('File uploaded successfully:', result);
       } else {
         // Handle error
         console.error('Failed to upload image');
@@ -76,7 +94,7 @@ export default function CameraComponent() {
     } catch (error) {
       // Handle network errors
       console.error('Network error', error);
-    }
+    }}
 
     // Close the modal and reset the captured image
     setShowModal(false);
@@ -87,6 +105,34 @@ export default function CameraComponent() {
     // Close the modal and reset the captured image
     setShowModal(false);
     setCapturedImage(null);
+  };
+
+  const handleFileInputChange = async (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
+    if (file) {
+      const uniqueFilename = generateUniqueFilename(); // Generate a unique filename
+      const formData = new FormData();
+
+      formData.append('file', file, uniqueFilename); // Assign the unique filename to the uploaded file
+
+      try {
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          const result = await response.text();
+          console.log('File uploaded successfully:', result);
+        } else {
+          console.error('Failed to upload file');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
   };
 
   return (
