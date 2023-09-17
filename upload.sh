@@ -4,6 +4,6 @@ git status
 
 git add .
 
-git commit -m "added upload image feature"
+git commit -m "finished design for body shape screen"
 
 git push
